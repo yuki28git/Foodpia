@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
-    guid: 3609a58654b5f1e4298fa87651e1d254
+    path: Assets/Scenes/GachaScene.unity
+    guid: 63b67ce89e2ddda44bd1e0c85917787c
   - enabled: 1
-    path: Assets/Scenes/CollectionScene.unity
-    guid: 109d6e33d56b2d44fb191bd857d23962
+    path: Assets/Scenes/GachaResult.unity
+    guid: 890027a8977826c419e986aebbe48dbe
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0

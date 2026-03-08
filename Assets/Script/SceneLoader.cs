@@ -11,4 +11,12 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("CollectionScene");
     }
+    public void LoadGachaScene()
+    {
+        SceneManager.LoadScene("GachaScene");
+    }
+    public void LoadGacharesult()
+    {
+        SceneManager.LoadScene("GachaResult");
+    }
 }
