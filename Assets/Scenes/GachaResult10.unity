@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleImage: {fileID: 123113735}
+  singleFrameImage: {fileID: 0}
   multiImages:
   - {fileID: 123113735}
   - {fileID: 1905077735}
@@ -537,6 +538,17 @@ MonoBehaviour:
   - {fileID: 1012871989}
   - {fileID: 1530530214}
   - {fileID: 1050561337}
+  multiFrameImages:
+  - {fileID: 2107840743}
+  - {fileID: 1773643820}
+  - {fileID: 391952933}
+  - {fileID: 1812239308}
+  - {fileID: 159767201}
+  - {fileID: 1562891647}
+  - {fileID: 2119992088}
+  - {fileID: 1884578189}
+  - {fileID: 1538473563}
+  - {fileID: 1428203126}
 --- !u!4 &481754747
 Transform:
   m_ObjectHideFlags: 0
@@ -1426,7 +1438,7 @@ GameObject:
   - component: {fileID: 1428203127}
   - component: {fileID: 1428203126}
   m_Layer: 5
-  m_Name: Item5
+  m_Name: Item10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1577,7 +1589,7 @@ GameObject:
   - component: {fileID: 1538473564}
   - component: {fileID: 1538473563}
   m_Layer: 5
-  m_Name: Item4
+  m_Name: Item9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1953,7 +1965,7 @@ GameObject:
   - component: {fileID: 1884578190}
   - component: {fileID: 1884578189}
   m_Layer: 5
-  m_Name: Item3
+  m_Name: Item8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2468,7 +2480,7 @@ GameObject:
   - component: {fileID: 2119992089}
   - component: {fileID: 2119992088}
   m_Layer: 5
-  m_Name: Item2
+  m_Name: Item7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
