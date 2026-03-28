@@ -21,6 +21,9 @@ public static class GachaResultHolder
 public class GachaManagerScript : MonoBehaviour
 {
     public List<CharacterData> characterList = new List<CharacterData>();
+    public int gachaPrice = 1000;
+    public int gacha10Price = 10000;
+    public GameObject moneyDialog;
 
     void Start()
     {
@@ -82,25 +85,49 @@ public class GachaManagerScript : MonoBehaviour
     // ガチャボタンで呼ぶ
     public void OnClickGacha()
     {
+        // MoneyDisplayScript経由で支払
+        var moneyDisp = FindObjectOfType<MoneyDisplayScript>();
+        if (moneyDisp == null) return;
+        if (!moneyDisp.TrySpendMoney(gachaPrice))
+        {
+            if (moneyDialog != null)
+                moneyDialog.SetActive(true);
+            return;
+        }
+
         CharacterData result = GetRandomCharacter();
-
         if (result == null) return;
-
         GachaResultHolder.results.Clear();
         GachaResultHolder.results.Add(result);
+
+        SceneManager.LoadScene("GachaResult");
     }
     public void OnClickGacha10()
     {
+        var moneyDisp = FindObjectOfType<MoneyDisplayScript>();
+        if (moneyDisp == null) return;
+        if (!moneyDisp.TrySpendMoney(gacha10Price))
+        {
+            if (moneyDialog != null)
+                moneyDialog.SetActive(true);
+            return;
+        }
+
         GachaResultHolder.results.Clear();
 
         for (int i = 0; i < 10; i++)
         {
             CharacterData result = GetRandomCharacter();
             Debug.Log(result);
-            if (result != null)
-            {
-                GachaResultHolder.results.Add(result);
-            }
+            if (result != null) GachaResultHolder.results.Add(result);
         }
+        SceneManager.LoadScene("GachaResult10");
+    }
+
+    // OKボタン用（MoneyDialogのOKボタンからInspectorで呼ぶ）
+    public void OnMoneyDialogOk()
+    {
+        // ガチャ画面に戻す
+        SceneManager.LoadScene("GachaScene");
     }
 }
