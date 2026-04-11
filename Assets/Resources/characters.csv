@@ -1,8 +1,14 @@
 name,imagePath,rarity
 GirlType1,Charactors/Images/GirlType1,Legendary
 No2,Charactors/Images/No2,Super Rare
-No3,Charactors/Images/No3,Super Rare
-No4,Charactors/Images/No4,Rare
-No5,Charactors/Images/No5,Super Rare
+No3,Charactors/Images/No3,Common
+No4,Charactors/Images/No4,Common
+No5,Charactors/Images/No5,Common
 No6,Charactors/Images/No6,Common
-No7,Charactors/Images/No7,Rare
+No7,Charactors/Images/No7,Common
+No8,Charactors/Images/No8,Rare
+No9,Charactors/Images/No9,Rare
+No10,Charactors/Images/No10,Common
+No11,Charactors/Images/No11,Common
+No12,Charactors/Images/No12,Common
+No13,Charactors/Images/No13,Common
