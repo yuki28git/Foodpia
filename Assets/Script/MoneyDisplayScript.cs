@@ -7,11 +7,13 @@ public class MoneyDisplayScript : MonoBehaviour
 
     public static int money = 25000; // 初期値/セーブする場合はPlayerPrefs利用を検討
 
+    // 最初の画面表示時の処理
     void Start()
     {
         RefreshMoney();
     }
 
+    // お金表示を更新する共通メソッド
     public void RefreshMoney()
     {
         if (moneyText != null)
@@ -27,6 +29,7 @@ public class MoneyDisplayScript : MonoBehaviour
         return true;
     }
 
+    // お金を増やす
     public void AddMoney(int value)
     {
         money += value;
