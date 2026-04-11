@@ -16,41 +16,52 @@ public class CharacterCollection : MonoBehaviour
     int currentPage = 0;
     const int charsPerPage = 10;
 
+    // 最初の図鑑画面表示時の処理
     void Start()
     {
+        OwnershipManager.Load();
         characterList = LoadCharacterData();
         UpdatePage();
         prevButton.onClick.AddListener(PrevPage);
         nextButton.onClick.AddListener(NextPage);
     }
 
+    // 現在のページに応じてキャラボタンを生成＆更新
     void UpdatePage()
     {
-        // 一度全削除
+        // 既存のボタンを全て削除
         foreach (Transform child in gridParent)
             Destroy(child.gameObject);
 
+        // 表示するキャラの範囲を計算
         int start = currentPage * charsPerPage;
         int end = Mathf.Min(start + charsPerPage, characterList.Count);
 
+        // 範囲内のキャラについて、所持状況を渡してボタンを生成
         for (int i = start; i < end; ++i)
         {
             var obj = Instantiate(characterButtonPrefab, gridParent);
-            obj.GetComponent<CharacterButtonScript>().Setup(characterList[i]);
+            bool isOwned = OwnershipManager.Has(characterList[i].name);
+            obj.GetComponent<CharacterButtonScript>().Setup(characterList[i], isOwned);
         }
 
+        // ページ数表示とボタンの有効/無効設定
         int totalPage = Mathf.CeilToInt((float)characterList.Count / charsPerPage);
         pageLabel.text = $"{currentPage + 1} / {totalPage}";
 
+        // Prevは0ページ目以外で有効、Nextは最後のページ以外で有効
         prevButton.interactable = (currentPage > 0);
         nextButton.interactable = ((currentPage + 1) * charsPerPage < characterList.Count);
     }
 
+    // Nextボタンの処理
     public void NextPage()
     {
         currentPage++;
         UpdatePage();
     }
+
+    // Prevボタンの処理
     public void PrevPage()
     {
         currentPage--;
@@ -65,6 +76,7 @@ public class CharacterCollection : MonoBehaviour
         public string rarity;
     }
 
+    // CSVからキャラクターデータを読み込む処理
     List<CharacterData> LoadCharacterData()
     {
         TextAsset csv = Resources.Load<TextAsset>("characters");

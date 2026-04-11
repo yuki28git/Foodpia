@@ -102,6 +102,8 @@ public class GachaManagerScript : MonoBehaviour
 
         SceneManager.LoadScene("GachaResult");
     }
+
+    // 10連ガチャボタンで呼ぶ
     public void OnClickGacha10()
     {
         var moneyDisp = FindObjectOfType<MoneyDisplayScript>();
