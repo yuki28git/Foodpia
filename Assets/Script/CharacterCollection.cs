@@ -38,11 +38,24 @@ public class CharacterCollection : MonoBehaviour
         int end = Mathf.Min(start + charsPerPage, characterList.Count);
 
         // 範囲内のキャラについて、所持状況を渡してボタンを生成
+        // for (int i = start; i < end; ++i)
+        // {
+        //     var obj = Instantiate(characterButtonPrefab, gridParent);
+        //     bool isOwned = OwnershipManager.Has(characterList[i].name);
+        //     obj.GetComponent<CharacterButtonScript>().Setup(characterList[i], isOwned);
+        // }
         for (int i = start; i < end; ++i)
         {
             var obj = Instantiate(characterButtonPrefab, gridParent);
             bool isOwned = OwnershipManager.Has(characterList[i].name);
-            obj.GetComponent<CharacterButtonScript>().Setup(characterList[i], isOwned);
+
+            var script = obj.GetComponent<CharacterButtonScript>();
+            script.Setup(characterList[i], isOwned);
+
+            // ボタンにOnClickDetailを登録する
+            var button = obj.GetComponent<Button>();
+            if (button != null)
+                button.onClick.AddListener(script.OnClickDetail);
         }
 
         // ページ数表示とボタンの有効/無効設定
@@ -74,6 +87,9 @@ public class CharacterCollection : MonoBehaviour
         public string name;
         public string imagePath;
         public string rarity;
+        public string nickname;    // ふたつな
+        public string species;     // 種族
+        public string description; // 詳細情報
     }
 
     // CSVからキャラクターデータを読み込む処理
@@ -89,11 +105,15 @@ public class CharacterCollection : MonoBehaviour
             {
                 if (header) { header = false; continue; }
                 var vals = line.Split(',');
+                // カラム順に合わせて値を詰める
                 var data = new CharacterData()
                 {
                     name = vals[0],
                     imagePath = vals[1],
-                    rarity = vals[2]
+                    rarity = vals[2],
+                    nickname = vals[3],
+                    species = vals[4],
+                    description = vals[5],
                 };
                 list.Add(data);
             }

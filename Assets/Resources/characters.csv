@@ -1,14 +1,14 @@
-name,imagePath,rarity
-GirlType1,Charactors/Images/GirlType1,Legendary
-No2,Charactors/Images/No2,Super Rare
-No3,Charactors/Images/No3,Common
-No4,Charactors/Images/No4,Common
-No5,Charactors/Images/No5,Common
-No6,Charactors/Images/No6,Common
-No7,Charactors/Images/No7,Common
-No8,Charactors/Images/No8,Rare
-No9,Charactors/Images/No9,Rare
-No10,Charactors/Images/No10,Common
-No11,Charactors/Images/No11,Common
-No12,Charactors/Images/No12,Common
-No13,Charactors/Images/No13,Common
+name,imagePath,rarity,nickname,species,description
+GirlType1,Charactors/Images/GirlType1,Legendary,勇者ちゃん,人間,謎に包まれた伝説の勇者。全てのガチャを統べる力を持つ。
+No2,Charactors/Images/No2,Super Rare,鉄腕ゴリラ,ビースト,巨大な腕力で岩をも砕く。野生で群れをなす。
+No3,Charactors/Images/No3,Common,ピンクキューブ,スライム,不思議な顔のスライム。表情が豊かで人気。
+No4,Charactors/Images/No4,Common,アカキノコ,きのこ,赤い頭のキノコ型モンスター。動きはのんびり。
+No5,Charactors/Images/No5,Common,青いアリ,昆虫,夜行性。集団で行動する。
+No6,Charactors/Images/No6,Common,グリーンブロック,ゴーレム,立方体の体を持つ謎の存在。
+No7,Charactors/Images/No7,Common,ドワーフ帽,ドワーフ,鉱山で働く職人肌の種族。
+No8,Charactors/Images/No8,Rare,ウミガメ仙人,爬虫類,長寿の知恵者。海の底で瞑想している。
+No9,Charactors/Images/No9,Rare,サボテン先生,植物,トゲに注意。砂漠で暮らしている。
+No10,Charactors/Images/No10,Common,忍者,人間,すばしっこい動きで敵を翻弄する。
+No11,Charactors/Images/No11,Common,子どもドラゴン,ドラゴン,まだ幼い火竜。炎は弱いが飛行できる。
+No12,Charactors/Images/No12,Common,くま,哺乳類,森に住む力持ち。
+No13,Charactors/Images/No13,Common,コボルト,魔族,地下で生活する小鬼の一種。
