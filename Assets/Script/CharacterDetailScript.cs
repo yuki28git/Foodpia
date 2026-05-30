@@ -51,6 +51,12 @@ public class CharacterDetailScript : MonoBehaviour
         if (prefab != null && modelRoot != null)
         {
             currentModel = Instantiate(prefab, modelRoot, false);
+
+            Vector3 pos = currentModel.transform.localPosition;
+            pos.y += 1f;
+            currentModel.transform.localPosition = pos;
+
+            CharacterAnimationHelper.PlayIdle(currentModel);
         }
     }
 

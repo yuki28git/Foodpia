@@ -41,6 +41,8 @@ public class FavoriteCharacterLobbySpawner : MonoBehaviour
         }
 
         currentModel = Instantiate(prefab, spawnRoot, false);
+
+        CharacterAnimationHelper.PlayIdle(currentModel);
     }
 
     private void OnDestroy()
