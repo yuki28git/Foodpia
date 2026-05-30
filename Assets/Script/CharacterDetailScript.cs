@@ -51,6 +51,7 @@ public class CharacterDetailScript : MonoBehaviour
         if (prefab != null && modelRoot != null)
         {
             currentModel = Instantiate(prefab, modelRoot, false);
+            CharacterAnimationHelper.PlayIdle(currentModel);
         }
     }
 
