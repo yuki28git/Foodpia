@@ -16,7 +16,6 @@ public class CharacterCollection : MonoBehaviour
     int currentPage = 0;
     const int charsPerPage = 10;
 
-    // 最初の図鑑画面表示時の処理
     void Start()
     {
         OwnershipManager.Load();
@@ -26,24 +25,14 @@ public class CharacterCollection : MonoBehaviour
         nextButton.onClick.AddListener(NextPage);
     }
 
-    // 現在のページに応じてキャラボタンを生成＆更新
     void UpdatePage()
     {
-        // 既存のボタンを全て削除
         foreach (Transform child in gridParent)
             Destroy(child.gameObject);
 
-        // 表示するキャラの範囲を計算
         int start = currentPage * charsPerPage;
         int end = Mathf.Min(start + charsPerPage, characterList.Count);
 
-        // 範囲内のキャラについて、所持状況を渡してボタンを生成
-        // for (int i = start; i < end; ++i)
-        // {
-        //     var obj = Instantiate(characterButtonPrefab, gridParent);
-        //     bool isOwned = OwnershipManager.Has(characterList[i].name);
-        //     obj.GetComponent<CharacterButtonScript>().Setup(characterList[i], isOwned);
-        // }
         for (int i = start; i < end; ++i)
         {
             var obj = Instantiate(characterButtonPrefab, gridParent);
@@ -52,29 +41,31 @@ public class CharacterCollection : MonoBehaviour
             var script = obj.GetComponent<CharacterButtonScript>();
             script.Setup(characterList[i], isOwned);
 
-            // ボタンにOnClickDetailを登録する
             var button = obj.GetComponent<Button>();
             if (button != null)
+            {
+                // 1回目クリックから確実に鳴らすため、その場で登録
+                if (GlobalButtonClickSE.Instance != null)
+                    GlobalButtonClickSE.Instance.RegisterButton(button);
+
+                // 詳細遷移
                 button.onClick.AddListener(script.OnClickDetail);
+            }
         }
 
-        // ページ数表示とボタンの有効/無効設定
         int totalPage = Mathf.CeilToInt((float)characterList.Count / charsPerPage);
         pageLabel.text = $"{currentPage + 1} / {totalPage}";
 
-        // Prevは0ページ目以外で有効、Nextは最後のページ以外で有効
         prevButton.interactable = (currentPage > 0);
         nextButton.interactable = ((currentPage + 1) * charsPerPage < characterList.Count);
     }
 
-    // Nextボタンの処理
     public void NextPage()
     {
         currentPage++;
         UpdatePage();
     }
 
-    // Prevボタンの処理
     public void PrevPage()
     {
         currentPage--;
@@ -87,12 +78,11 @@ public class CharacterCollection : MonoBehaviour
         public string name;
         public string imagePath;
         public string rarity;
-        public string nickname;    // ふたつな
-        public string species;     // 種族
-        public string description; // 詳細情報
+        public string nickname;
+        public string species;
+        public string description;
     }
 
-    // CSVからキャラクターデータを読み込む処理
     List<CharacterData> LoadCharacterData()
     {
         TextAsset csv = Resources.Load<TextAsset>("characters");
@@ -105,7 +95,6 @@ public class CharacterCollection : MonoBehaviour
             {
                 if (header) { header = false; continue; }
                 var vals = line.Split(',');
-                // カラム順に合わせて値を詰める
                 var data = new CharacterData()
                 {
                     name = vals[0],
