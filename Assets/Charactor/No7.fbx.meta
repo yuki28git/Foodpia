@@ -3,7 +3,12 @@ guid: 7ff30726a84712a4bb7ec94f408dd6ff
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No7_texture.png
+    second: {fileID: 2100000, guid: f03b5cf786ec662438bc64fa645e6eec, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
