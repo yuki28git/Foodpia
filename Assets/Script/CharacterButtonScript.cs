@@ -35,10 +35,16 @@ public class CharacterButtonScript : MonoBehaviour
     }
     public void OnClickDetail()
     {
+        // 未所持は詳細を開かない
+        if (!_isOwned)
+        {
+            Debug.Log("未所持キャラなので詳細画面は開けません");
+            return;
+        }
+
         CharacterDetailHolder.SelectedData = _data;
         CharacterDetailHolder.IsOwned = _isOwned;
 
-        // Canvasだけ非表示
         if (CollectionRootController.Instance != null)
             CollectionRootController.Instance.HideCanvas();
 

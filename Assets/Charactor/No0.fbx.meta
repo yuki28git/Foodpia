@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9eb547c6d00bb98469044260b548cd2d
+guid: 6569feffed09add428d6b20a52e0f59b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: No6_texture.png
-    second: {fileID: 2100000, guid: bed1f631315515e458b5231b02cacba3, type: 2}
+      name: No0_texture.png
+    second: {fileID: 2100000, guid: e65bd35bedf6d0246a16d3ec4bc4f1b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: texture.png
+    second: {fileID: 2100000, guid: e65bd35bedf6d0246a16d3ec4bc4f1b8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,9 +41,9 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: idle
-      takeName: idle
-      internalID: -5252816984213320552
+      name: Idle
+      takeName: Idle
+      internalID: -3100369314251171874
       firstFrame: 0
       lastFrame: 60
       wrapMode: 0
