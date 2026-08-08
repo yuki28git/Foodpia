@@ -11,6 +11,7 @@ public class GlobalButtonClickSE : MonoBehaviour
     [SerializeField] private AudioClip clickSE;
 
     private readonly HashSet<int> registeredButtonIds = new HashSet<int>();
+    private float seVolume = 0.3f;
 
     void Awake()
     {
@@ -24,6 +25,8 @@ public class GlobalButtonClickSE : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
+
+        seVolume = VolumeController.GetSavedVolume(VolumeController.VolumeType.ClickSE);
     }
 
     void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -50,9 +53,14 @@ public class GlobalButtonClickSE : MonoBehaviour
         registeredButtonIds.Add(id);
     }
 
+    public void SetVolume(float v)
+    {
+        seVolume = Mathf.Clamp01(v);
+    }
+
     public void PlayClickSE()
     {
         if (audioSource == null || clickSE == null) return;
-        audioSource.PlayOneShot(clickSE, 1.0f);
+        audioSource.PlayOneShot(clickSE, seVolume);
     }
 }

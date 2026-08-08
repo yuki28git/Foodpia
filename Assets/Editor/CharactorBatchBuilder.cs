@@ -29,6 +29,9 @@ public static class CharactorBatchBuilder
             var fbx = AssetDatabase.LoadAssetAtPath<GameObject>(fbxPath);
             if (fbx == null) { ng++; continue; }
 
+            // Animation Clip Import Settings (Loop Time / Loop Pose)
+            EnsureFbxClipsLoopSettings(fbxPath);
+
             // Texture
             string texPath = FindTexturePath(srcDir, baseName);
             Texture2D tex = null;
@@ -51,7 +54,7 @@ public static class CharactorBatchBuilder
                 mat.mainTexture = tex;
                 if (mat.HasProperty("_MainTex")) mat.SetTexture("_MainTex", tex);
             }
-            SetStandardCutout(mat);
+            SetStandardFade(mat);
             EditorUtility.SetDirty(mat);
             AssetDatabase.SaveAssets();
 
@@ -100,6 +103,36 @@ public static class CharactorBatchBuilder
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log($"完了: OK={ok}, SKIP={ng}");
+    }
+
+    static void EnsureFbxClipsLoopSettings(string fbxPath)
+    {
+        var importer = AssetImporter.GetAtPath(fbxPath) as ModelImporter;
+        if (importer == null) return;
+
+        // 既に手動分割設定がある場合は clipAnimations、
+        // ない場合は defaultClipAnimations を元にする
+        var clips = importer.clipAnimations;
+        if (clips == null || clips.Length == 0)
+            clips = importer.defaultClipAnimations;
+
+        if (clips == null || clips.Length == 0) return;
+
+        bool changed = false;
+
+        for (int i = 0; i < clips.Length; i++)
+        {
+            var c = clips[i];
+            if (!c.loopTime) { c.loopTime = true; changed = true; }
+            if (!c.loopPose) { c.loopPose = true; changed = true; }
+            clips[i] = c;
+        }
+
+        if (changed)
+        {
+            importer.clipAnimations = clips;
+            importer.SaveAndReimport();
+        }
     }
 
     static void RemapOnlyKeepOriginalImporterState(string fbxPath, Material targetMat, string texPath)
@@ -188,16 +221,16 @@ public static class CharactorBatchBuilder
         sm.defaultState = state;
     }
 
-    static void SetStandardCutout(Material mat)
+    static void SetStandardFade(Material mat)
     {
-        mat.SetFloat("_Mode", 1);
-        mat.SetOverrideTag("RenderType", "TransparentCutout");
-        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-        mat.SetInt("_ZWrite", 1);
-        mat.EnableKeyword("_ALPHATEST_ON");
-        mat.DisableKeyword("_ALPHABLEND_ON");
+        mat.SetFloat("_Mode", 2); // Fade
+        mat.SetOverrideTag("RenderType", "Transparent");
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_ZWrite", 0);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.EnableKeyword("_ALPHABLEND_ON");
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
     }
 }

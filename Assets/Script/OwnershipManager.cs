@@ -1,43 +1,69 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public static class OwnershipManager
 {
-    private static HashSet<string> ownedNames;
+    private static Dictionary<string, int> ownedCounts;
 
-    // 保存データのロード（最初や図鑑表示時に呼ぶ）
-    // データは「OwnedCharacters」というキーで、キャラ名をカンマ区切りで保存している想定
-    // 例: OwnedCharacters: "No1,No2,No3"
     public static void Load()
     {
         string saved = PlayerPrefs.GetString("OwnedCharacters", "");
-        ownedNames = new HashSet<string>(
-            saved.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries)
-        );
-    }
+        ownedCounts = new Dictionary<string, int>();
 
-    // 所持しているか確認
-    public static bool Has(string characterName)
-    {
-        if (ownedNames == null) Load();
-        return ownedNames.Contains(characterName);
-    }
+        if (string.IsNullOrEmpty(saved))
+            return;
 
-    // 所持キャラを追加＆保存
-    public static void Add(string characterName)
-    {
-        if (ownedNames == null) Load();
-        if (ownedNames.Add(characterName)) // 新規で追加時のみ保存
+        string[] entries = saved.Split(',');
+        foreach (var entry in entries)
         {
-            PlayerPrefs.SetString("OwnedCharacters", string.Join(",", ownedNames));
-            PlayerPrefs.Save();
+            if (string.IsNullOrWhiteSpace(entry)) continue;
+
+            string[] pair = entry.Split(':');
+            if (pair.Length != 2) continue;
+
+            string name = pair[0];
+            if (int.TryParse(pair[1], out int count))
+            {
+                ownedCounts[name] = count;
+            }
         }
     }
 
-    // （テスト用）全データ消去
+    public static bool Has(string characterName)
+    {
+        if (ownedCounts == null) Load();
+        return ownedCounts.ContainsKey(characterName) && ownedCounts[characterName] > 0;
+    }
+
+    public static int GetCount(string characterName)
+    {
+        if (ownedCounts == null) Load();
+        return ownedCounts.TryGetValue(characterName, out int count) ? count : 0;
+    }
+
+    public static void Add(string characterName)
+    {
+        if (ownedCounts == null) Load();
+
+        if (ownedCounts.ContainsKey(characterName))
+            ownedCounts[characterName]++;
+        else
+            ownedCounts[characterName] = 1;
+
+        Save();
+    }
+
+    private static void Save()
+    {
+        var entries = ownedCounts.Select(kvp => $"{kvp.Key}:{kvp.Value}");
+        PlayerPrefs.SetString("OwnedCharacters", string.Join(",", entries));
+        PlayerPrefs.Save();
+    }
+
     public static void Clear()
     {
-        ownedNames = new HashSet<string>();
+        ownedCounts = new Dictionary<string, int>();
         PlayerPrefs.DeleteKey("OwnedCharacters");
     }
 }

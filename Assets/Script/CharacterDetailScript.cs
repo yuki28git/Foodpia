@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; // or UnityEngine.UI;
+using TMPro;
 
 public class CharacterDetailScript : MonoBehaviour
 {
@@ -23,14 +23,13 @@ public class CharacterDetailScript : MonoBehaviour
         for (int i = 1; i < als.Length; ++i) Destroy(als[i].gameObject);
 
         var data = CharacterDetailHolder.SelectedData;
-        bool isOwned = CharacterDetailHolder.IsOwned;
 
         nameText.text = data.name;
         nicknameText.text = data.nickname;
         speciesText.text = data.species;
         rarityText.text = data.rarity;
 
-        int count = OwnershipManager.Has(data.name) ? 1 : 0;
+        int count = OwnershipManager.GetCount(data.name);
         countText.text = count + "体";
         descriptionText.text = data.description;
 
