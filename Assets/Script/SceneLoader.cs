@@ -23,4 +23,8 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("GachaResult10");
     }
+    public void LoadNewScene()
+    {
+        SceneManager.LoadScene("NewScene");
+    }
 }
